@@ -21,6 +21,10 @@ cdns2=1.0.0.1
 ibm1=9.0.128.50
 ibm2=9.0.130.50
 
+#QUAD9
+quad1=9.9.9.9
+quad2=149.112.112.112
+
 #--- End DNS Table entries
 
 # Variables
@@ -79,8 +83,8 @@ determine_osx_release()
 
 print_usage()
 {
-    echo "usage: "$prog" [-a auto] [-c cloudflare] [-d dyndns] [-g google] [-h help] [-o opendns] [-p print] [-r reset]"
-    echo "  This utility sets ["$interface"] DNS entries to CloudFlare, DynDNS, Google, OpenDNS or DHCP host (auto)"
+    echo "usage: "$prog" [-a auto] [-c cloudflare] [-d dyndns] [-g google] [-h help] [-o opendns] [-p print] [-q quad9] [-r reset]"
+    echo "  This utility sets ["$interface"] DNS entries to CloudFlare, DynDNS, Google, OpenDNS, Quad9, or DHCP host (auto)"
     echo "  eg: $prog -g   <--- sets the "$interface" interface to use Google DNS"
     exit;
 }
@@ -214,6 +218,12 @@ while getopts :acdghiopr option; do
         p=${OPTARG}
         print_dns_entry
         exit;;
+    q)
+        q=${OPTARG}
+        echo "Setting" [$interface] "interface to Quad9"
+        edit_nameserver_interface $quad1 $quad2
+        exit;;
+        
     r)
         r=${OPTARG}
         echo "Resetting DNS Cache"
